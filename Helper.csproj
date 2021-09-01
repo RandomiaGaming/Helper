@@ -81,5 +81,9 @@
     <Compile Include="Helper\Program.cs" />
     <Compile Include="Helper\RegisterHelperCommandAttribute.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include="Icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
