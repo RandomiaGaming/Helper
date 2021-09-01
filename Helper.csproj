@@ -47,18 +47,8 @@
     <Reference Include="System.Speech" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helper\Commands\CommandException.cs" />
-    <Compile Include="Methods\BasicCommands.cs" />
-    <Compile Include="Methods\BlueCrash.cs" />
-    <Compile Include="Methods\CryptographyHelper.cs" />
-    <Compile Include="Helper\Commands\HelperCommand.cs" />
-    <Compile Include="Helper\Commands\RegisterHelperCommandAttribute.cs" />
-    <Compile Include="Methods\Installer.cs" />
-    <Compile Include="Helper\Program.cs" />
-    <Compile Include="Helper\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
@@ -76,6 +66,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\BasicCommands.cs" />
+    <Compile Include="Commands\BlueCrash.cs" />
+    <Compile Include="Commands\CryptographyHelper.cs" />
+    <Compile Include="Commands\Installer.cs" />
+    <Compile Include="Commands\PhotoHelper.cs" />
+    <Compile Include="Commands\WallpaperHelper.cs" />
+    <Compile Include="Helper\AssemblyInfo.cs" />
+    <Compile Include="Helper\CommandException.cs" />
+    <Compile Include="Helper\HelperCommand.cs" />
+    <Compile Include="Helper\NonrequiredArgAttribute.cs" />
+    <Compile Include="Helper\Program.cs" />
+    <Compile Include="Helper\RegisterHelperCommandAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
