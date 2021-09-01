@@ -35,7 +35,7 @@ namespace Helper
             {
                 foreach (MethodInfo method in type.GetMethods())
                 {
-                    Attribute attribute = method.GetCustomAttribute(typeof(RegisterCommandAttribute));
+                    Attribute attribute = method.GetCustomAttribute(typeof(RegisterHelperCommandAttribute));
                     if (!(attribute is null))
                     {
                         LoadMethod(method);
@@ -56,12 +56,12 @@ namespace Helper
                     throw new Exception("Cannot load method because target C# method requires an object reference.");
                 }
 
-                Attribute uncastAttribute = baseMethod.GetCustomAttribute(typeof(RegisterCommandAttribute));
-                if (uncastAttribute is null || uncastAttribute.GetType() != typeof(RegisterCommandAttribute))
+                Attribute uncastAttribute = baseMethod.GetCustomAttribute(typeof(RegisterHelperCommandAttribute));
+                if (uncastAttribute is null || uncastAttribute.GetType() != typeof(RegisterHelperCommandAttribute))
                 {
                     throw new Exception("Cannot load method because the C# method does not have the propper atribute.");
                 }
-                RegisterCommandAttribute attribute = (RegisterCommandAttribute)uncastAttribute;
+                RegisterHelperCommandAttribute attribute = (RegisterHelperCommandAttribute)uncastAttribute;
                 methods.Add(new HelperCommand(baseMethod, baseMethod.Name, attribute.description, attribute.requiresAdministrator));
             }
             catch (Exception e)
