@@ -17,8 +17,8 @@ namespace Helper.Commands
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
 
-        [RegisterMethod("SetWallpaper", false)]
-        public static void SetWallpaper(string args)
+        [RegisterCommand("Sets the wallpaper of the current user to a randomly generated cat.", false, false)]
+        public static void SetWallpaperToCat()
         {
             //Download a cat
             Assembly assembly = Assembly.GetCallingAssembly();

@@ -25,18 +25,9 @@ namespace Helper
             }
             return false;
         }
+        [RegisterCommand("Installs helper.", true, false)]
         public static void Install()
         {
-            if (!Program.IsAdministrator())
-            {
-                Process process = new Process();
-                process.StartInfo.FileName = Assembly.GetCallingAssembly().Location;
-                process.StartInfo.Arguments = "Install();StayOpen();";
-                process.StartInfo.UseShellExecute = true;
-                process.StartInfo.Verb = "runas";
-                process.Start();
-                Process.GetCurrentProcess().Kill();
-            }
             bool installedSuccessfully = AddToProgramFiles();
             if (installedSuccessfully)
             {
@@ -48,6 +39,7 @@ namespace Helper
                 throw new Exception("Installation aborted due to an error.");
             }
         }
+        [RegisterCommand("Uninstalls helper", true, true)]
         public static void Uninstall()
         {
             RemoveShortcut();

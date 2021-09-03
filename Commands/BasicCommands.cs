@@ -9,18 +9,18 @@ namespace Helper.Commands
 {
     public static class BasicCommands
     {
-        [RegisterHelperCommand("Prints a message to the console.", false, false)]
+        [RegisterCommand("Prints a message to the console.", false, false)]
         public static void Echo(string message)
         {
             Console.WriteLine(message);
         }
-        [RegisterHelperCommand("Provides information about a method.", false, false)]
-        public static void Help([OptionalArgument] string methodName)
+        [RegisterCommand("Provides information about a method.", false, false)]
+        public static void Help([OptionalArgument]string methodName)
         {
             if (methodName is null || methodName == "")
             {
                 Console.WriteLine("To run a command in helper simply type its name and press enter. Here is a list of all currently installed commands...");
-                foreach (HelperCommand method in Program.methods)
+                foreach (Command method in global::Helper.Program.methods)
                 {
                     if (method.name.ToUpper() == methodName.ToUpper())
                     {
@@ -34,10 +34,10 @@ namespace Helper.Commands
                 Console.WriteLine("Finlay is lazy");
             }
         }
-        [RegisterHelperCommand("Asks prompts the user for administrator if helper is not already an administrator.", false, false)]
+        [RegisterCommand("Asks prompts the user for administrator if helper is not already an administrator.", false, false)]
         public static void Elevate()
         {
-            if (!Program.IsAdministrator())
+            if (!global::Helper.Program.IsAdministrator())
             {
                 Process process = new Process();
                 process.StartInfo.FileName = Assembly.GetCallingAssembly().Location;
@@ -47,17 +47,12 @@ namespace Helper.Commands
                 Process.GetCurrentProcess().Kill();
             }
         }
-        [RegisterHelperCommand("Installs helper to program files if it is not already installed", true, false)]
-        public static void Install()
-        {
-            Installer.Install();
-        }
-        [RegisterHelperCommand("Prints the current working directory to the console.", false, false)]
-        public static void GetWorkingDirectory()
+        [RegisterCommand("Prints the current working directory to the console.", false, false)]
+        public static void WorkingDir()
         {
             Console.WriteLine(Environment.CurrentDirectory);
         }
-        [RegisterHelperCommand("Formats an image to the PNG format.", false, false)]
+        [RegisterCommand("Formats an image to the PNG format.", false, false)]
         public static void ConvertToPNG(string filePath)
         {
             if (filePath is null)
@@ -72,18 +67,18 @@ namespace Helper.Commands
             img.Save(Path.GetFileNameWithoutExtension(filePath) + ".png", ImageFormat.Png);
             File.Delete(filePath);
         }
-        [RegisterHelperCommand("Closes the current instance of helper.", false, false)]
+        [RegisterCommand("Closes the current instance of helper.", false, false)]
         public static void Exit()
         {
             Process.GetCurrentProcess().Kill();
         }
-        [RegisterHelperCommand("Prints the current helper version to the console.", false, false)]
+        [RegisterCommand("Prints the current helper version to the console.", false, false)]
         public static void Helper()
         {
             Assembly assembly = Assembly.GetCallingAssembly();
             Console.WriteLine($"Helper - {assembly.GetName().Version}");
         }
-        [RegisterHelperCommand("Reads out a message using Microsofts text to speech.", false, false)]
+        [RegisterCommand("Reads out a message using Microsofts text to speech.", false, false)]
         public static void TTS(string message)
         {
             SpeechSynthesizer synth = new SpeechSynthesizer();
@@ -91,12 +86,12 @@ namespace Helper.Commands
             synth.SelectVoiceByHints(VoiceGender.Neutral, VoiceAge.Adult);
             synth.SpeakAsync(message);
         }
-        [RegisterHelperCommand("Opens the exeption log file in the default text editor.", false, false)]
+        [RegisterCommand("Opens the exeption log file in the default text editor.", false, false)]
         public static void ExceptionLog()
         {
-            Process.Start(Program.GetRoot() + "\\ErrorLog.txt");
+            Process.Start(global::Helper.Program.GetRoot() + "\\ErrorLog.txt");
         }
-        [RegisterHelperCommand("Uses AES to encrypt a file.", false, false)]
+        [RegisterCommand("Uses AES to encrypt a file.", false, false)]
         public static void AESEncrypt(string filePath, string key)
         {
             if (!File.Exists(filePath))
@@ -105,7 +100,7 @@ namespace Helper.Commands
             }
             File.WriteAllBytes(filePath, CryptographyHelper.AESEncrypt(File.ReadAllBytes(filePath), key));
         }
-        [RegisterHelperCommand("Uses AES to decrypt a file.", false, false)]
+        [RegisterCommand("Uses AES to decrypt a file.", false, false)]
         public static void AESDecrypt(string filePath, string key)
         {
             if (!File.Exists(filePath))

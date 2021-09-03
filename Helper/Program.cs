@@ -8,65 +8,53 @@ namespace Helper
 {
     public static class Program
     {
-        public static List<HelperCommand> methods = new List<HelperCommand>();
+        private static List<Command> loadedCommands = new List<Command>();
         [STAThread]
         public static void Main()
         {
             try
-            {
-                LoadMethods();
-                while (true)
-                {
-                    InvokeCommand(Console.ReadLine());
-                }
-            }
-            catch (Exception e)
-            {
-                LogException(GetExceptionMessage(e));
-                Crash();
-            }
+             {
+                 LoadCommands();
+                 while (true)
+                 {
+                     InvokeCommand(Console.ReadLine());
+                 }
+             }
+             catch (Exception e)
+             {
+                 LogException(GetExceptionMessage(e));
+                 Crash();
+             }
         }
-        public static void LoadMethods()
+        public static void LoadCommandsFromAssembly(Assembly sourceAssembly)
         {
-            methods = new List<HelperCommand>();
-            Assembly assembly = Assembly.GetCallingAssembly();
-
-            foreach (Type type in assembly.GetTypes())
+            foreach (Type type in sourceAssembly.GetTypes())
             {
                 foreach (MethodInfo method in type.GetMethods())
                 {
-                    Attribute attribute = method.GetCustomAttribute(typeof(RegisterHelperCommandAttribute));
-                    if (!(attribute is null))
+                    if (method.GetCustomAttribute<RegisterCommandAttribute>() != null)
                     {
-                        LoadMethod(method);
+                        try
+                        {
+                            LoadCommand(method);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Failed to load command \"{method.Name}\" from assembly \"{sourceAssembly.FullName}\" due to exception \"{ex.Message}\".");
+                        }
                     }
                 }
             }
         }
-        public static void LoadMethod(MethodInfo baseMethod)
+        public static void LoadCommand(MethodInfo sourceMethod)
         {
             try
             {
-                if (baseMethod is null)
-                {
-                    throw new Exception("Cannot load method because target C# method was null.");
-                }
-                if (!baseMethod.IsStatic)
-                {
-                    throw new Exception("Cannot load method because target C# method requires an object reference.");
-                }
-
-                Attribute uncastAttribute = baseMethod.GetCustomAttribute(typeof(RegisterHelperCommandAttribute));
-                if (uncastAttribute is null || uncastAttribute.GetType() != typeof(RegisterHelperCommandAttribute))
-                {
-                    throw new Exception("Cannot load method because the C# method does not have the propper atribute.");
-                }
-                RegisterHelperCommandAttribute attribute = (RegisterHelperCommandAttribute)uncastAttribute;
-                methods.Add(new HelperCommand(baseMethod, baseMethod.Name, attribute.description, attribute.requiresAdministrator));
-            }
-            catch (Exception e)
+                loadedCommands()
+                    }
+            catch (Exception ex)
             {
-                LogException(GetExceptionMessage(e));
+                Console.WriteLine
             }
         }
         public static void InvokeCommand(string Command)
@@ -145,9 +133,9 @@ namespace Helper
             }
             else
             {
-                HelperCommand target = null;
+                Command target = null;
 
-                foreach (HelperCommand helperMethod in methods)
+                foreach (Command helperMethod in methods)
                 {
                     if (helperMethod.name.ToUpper() == node.value.ToUpper())
                     {

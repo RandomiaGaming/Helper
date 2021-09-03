@@ -68,22 +68,20 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include="Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Commands\BasicCommands.cs" />
     <Compile Include="Commands\BlueCrash.cs" />
     <Compile Include="Commands\CryptographyHelper.cs" />
     <Compile Include="Commands\Installer.cs" />
-    <Compile Include="Commands\PhotoHelper.cs" />
     <Compile Include="Commands\WallpaperHelper.cs" />
     <Compile Include="Helper\AssemblyInfo.cs" />
-    <Compile Include="Helper\CommandException.cs" />
-    <Compile Include="Helper\HelperCommand.cs" />
-    <Compile Include="Helper\NonrequiredArgAttribute.cs" />
+    <Compile Include="Helper\Command.cs" />
+    <Compile Include="Helper\OptionalArgumentAttribute.cs" />
     <Compile Include="Helper\Program.cs" />
-    <Compile Include="Helper\RegisterHelperCommandAttribute.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include=".gitignore" />
-    <Content Include="Icon.png" />
+    <Compile Include="Helper\RegisterCommandAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
