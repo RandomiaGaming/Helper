@@ -1,2 +1,2 @@
-# Helper
-Helper is an open source command line utility designed to help you automate simple maintenance tasks through the use of a customizable and expandable set of commands.
+# SharpShell
+SharpShell is an open source utility designed to help you automate simple tasks through the use of a customizable and expandable set of functions which can be stitched together to create scripts and commands which preform specific tasks.

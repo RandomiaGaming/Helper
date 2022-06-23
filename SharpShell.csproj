@@ -34,7 +34,8 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -62,26 +63,34 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include=".gitignore" />
-    <Content Include="Icon.png" />
+    <Compile Include="Default Functions\BasicCommands.cs" />
+    <Compile Include="Default Functions\BlueCrash.cs" />
+    <Compile Include="Default Functions\Installer.cs" />
+    <Compile Include="Default Functions\WallpaperHelper.cs" />
+    <Compile Include="Default Functions\EncryptionHelper.cs" />
+    <Compile Include="SharpShell\CommandProcessor.cs" />
+    <Compile Include="SharpShell\Builtins\ConsoleExceptionHandler.cs" />
+    <Compile Include="SharpShell\Builtins\ConsoleReturnHandler.cs" />
+    <Compile Include="SharpShell\Builtins\FileExceptionHandler.cs" />
+    <Compile Include="SharpShell\ExceptionHandler.cs" />
+    <Compile Include="SharpShell\Function.cs" />
+    <Compile Include="SharpShell\RegisterFunctionAttribute.cs" />
+    <Compile Include="SharpShell\OutputHandler.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="SharpShell\Command.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="SharpShell\RegisterCommandAttribute.cs" />
+    <Compile Include="SharpShell\SettingsManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\BasicCommands.cs" />
-    <Compile Include="Commands\BlueCrash.cs" />
-    <Compile Include="Commands\CryptographyHelper.cs" />
-    <Compile Include="Commands\Installer.cs" />
-    <Compile Include="Commands\WallpaperHelper.cs" />
-    <Compile Include="Helper\AssemblyInfo.cs" />
-    <Compile Include="Helper\Command.cs" />
-    <Compile Include="Helper\OptionalArgumentAttribute.cs" />
-    <Compile Include="Helper\Program.cs" />
-    <Compile Include="Helper\RegisterCommandAttribute.cs" />
+    <None Include=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon.ico" />
+    <None Include="Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -25,7 +25,7 @@ namespace Helper
             }
             return false;
         }
-        [RegisterCommand("Installs helper.", true, false)]
+        [RegisterFunction("Installs helper.")]
         public static void Install()
         {
             bool installedSuccessfully = AddToProgramFiles();
@@ -39,7 +39,7 @@ namespace Helper
                 throw new Exception("Installation aborted due to an error.");
             }
         }
-        [RegisterCommand("Uninstalls helper", true, true)]
+        [RegisterFunction("Uninstalls helper")]
         public static void Uninstall()
         {
             RemoveShortcut();
@@ -75,7 +75,7 @@ namespace Helper
                 {
                     ProcessStartInfo cmdProcessInfo = new ProcessStartInfo();
 
-                    cmdProcessInfo.Arguments = @"-Command del 'C:\Program Files\Helper' -r -Force";
+                    cmdProcessInfo.Arguments = @"-Function del 'C:\Program Files\Helper' -r -Force";
                     cmdProcessInfo.CreateNoWindow = true;
                     cmdProcessInfo.UseShellExecute = true;
                     cmdProcessInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -104,7 +104,7 @@ namespace Helper
             {
                 IWshRuntimeLibrary.WshShell shell = new IWshRuntimeLibrary.WshShell();
                 IWshRuntimeLibrary.IWshShortcut shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(@"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Helper\Helper.lnk");
-                shortcut.Description = "Helper is an open source command line utility for windows which includes commands for preforming a huge number of basic tasks.";
+                shortcut.Description = "Helper is an open source function line utility for windows which includes functions for preforming a huge number of basic tasks.";
                 shortcut.Hotkey = "";
                 shortcut.RelativePath = @"C:\Program Files\Helper\Helper.exe";
                 shortcut.Arguments = "";

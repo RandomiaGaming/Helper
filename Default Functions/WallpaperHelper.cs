@@ -6,9 +6,9 @@ using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace Helper.Commands
+namespace Helper.Functions
 {
-    public static class WallpaperCommands
+    public static class WallpaperFunctions
     {
         const int SPI_SETDESKWALLPAPER = 20;
         const int SPIF_UPDATEINIFILE = 0x01;
@@ -17,7 +17,7 @@ namespace Helper.Commands
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
 
-        [RegisterCommand("Sets the wallpaper of the current user to a randomly generated cat.", false, false)]
+        [RegisterFunction("Sets the wallpaper of the current user to a randomly generated cat.")]
         public static void SetWallpaperToCat()
         {
             //Download a cat

@@ -1,2 +1,0 @@
-# Security Policy
-To report any and all security vulnerabilities and bugs please use the issues tab of this repository. I check the issues very regularly during development and will make sure to address any and all concerns there. If you wish to try and fix the issue yourself then you can fork this repo and make your changes there. Make sure to link your forked repo in the issue report if you have fixed the issue already.
