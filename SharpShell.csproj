@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5AF51766-25CF-4407-AA2C-4AFE8781EFFF}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Helper</RootNamespace>
-    <AssemblyName>Helper</AssemblyName>
+    <RootNamespace>SharpShell</RootNamespace>
+    <AssemblyName>SharpShell</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -36,6 +36,9 @@
   <PropertyGroup>
     <ApplicationIcon>
     </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -66,24 +69,15 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Default Functions\BasicCommands.cs" />
-    <Compile Include="Default Functions\BlueCrash.cs" />
-    <Compile Include="Default Functions\Installer.cs" />
-    <Compile Include="Default Functions\WallpaperHelper.cs" />
-    <Compile Include="Default Functions\EncryptionHelper.cs" />
     <Compile Include="SharpShell\CommandProcessor.cs" />
     <Compile Include="SharpShell\Builtins\ConsoleExceptionHandler.cs" />
-    <Compile Include="SharpShell\Builtins\ConsoleReturnHandler.cs" />
-    <Compile Include="SharpShell\Builtins\FileExceptionHandler.cs" />
+    <Compile Include="SharpShell\Builtins\ConsoleOutputHandler.cs" />
     <Compile Include="SharpShell\ExceptionHandler.cs" />
     <Compile Include="SharpShell\Function.cs" />
-    <Compile Include="SharpShell\RegisterFunctionAttribute.cs" />
     <Compile Include="SharpShell\OutputHandler.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="SharpShell\Command.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="SharpShell\RegisterCommandAttribute.cs" />
-    <Compile Include="SharpShell\SettingsManager.cs" />
+    <Compile Include="SharpShell\RegisterFunctionAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

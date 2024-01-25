@@ -105,9 +105,9 @@ namespace Helper
                 IWshRuntimeLibrary.WshShell shell = new IWshRuntimeLibrary.WshShell();
                 IWshRuntimeLibrary.IWshShortcut shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(@"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Helper\Helper.lnk");
                 shortcut.Description = "Helper is an open source function line utility for windows which includes functions for preforming a huge number of basic tasks.";
-                shortcut.Hotkey = "";
+                shortcut.Hotkey = string.Empty;
                 shortcut.RelativePath = @"C:\Program Files\Helper\Helper.exe";
-                shortcut.Arguments = "";
+                shortcut.Arguments = string.Empty;
                 shortcut.WindowStyle = 0;
                 shortcut.WorkingDirectory = @"C:\Program Files\Helper";
                 shortcut.TargetPath = @"C:\Program Files\Helper\Helper.exe";
@@ -137,7 +137,7 @@ namespace Helper
 
             pathValues.Add(@"C:\Program Files\Helper");
 
-            pathValue = "";
+            pathValue = string.Empty;
 
             for (int i = 0; i < pathValues.Count; i++)
             {
@@ -168,7 +168,7 @@ namespace Helper
                 }
             }
 
-            pathValue = "";
+            pathValue = string.Empty;
 
             for (int i = 0; i < pathValues.Count; i++)
             {

@@ -1,25 +1,10 @@
-﻿using System;
-
-namespace Helper.Core
+﻿//Approved 06/23/2022
+namespace SharpShell
 {
     public sealed class ConsoleExceptionHandler : ExceptionHandler
     {
-        public ConsoleExceptionHandler()
-        {
-
-        }
-        public override void HandleException(Exception exception)
-        {
-            try
-            {
-                Console.WriteLine(GetExceptionMessage(exception));
-            }
-            catch
-            {
-
-            }
-        }
-        public static string GetExceptionMessage(Exception exception)
+        #region Public Overrides
+        public override void Handle(System.Exception exception)
         {
             string exceptionType;
             try
@@ -33,7 +18,7 @@ namespace Helper.Core
             string exceptionDateTime;
             try
             {
-                exceptionDateTime = $"{DateTime.Now.ToString("MM/dd/yyyy HH:m:s")}";
+                exceptionDateTime = System.DateTime.Now.ToString("MM/dd/yyyy HH:m:s");
             }
             catch
             {
@@ -42,13 +27,28 @@ namespace Helper.Core
             string exceptionMessage;
             try
             {
-                exceptionMessage = exception.Message;
+                if (exception.Message is null || exception.Message == string.Empty)
+                {
+                    exceptionMessage = "An unknown exception was thrown.";
+                }
+                else
+                {
+                    exceptionMessage = exception.Message;
+                }
             }
             catch
             {
                 exceptionMessage = "An unknown exception was thrown.";
             }
-            return $"An exception of type \"{exceptionType}\" was thrown at \"{exceptionDateTime}\" with the message \"{exceptionMessage}\".";
+            try
+            {
+                System.Console.WriteLine($"An exception of type \"{exceptionType}\" was thrown at \"{exceptionDateTime}\" with the message \"{exceptionMessage}\".");
+            }
+            catch
+            {
+                throw new System.Exception("Exception could not be handled.");
+            }
         }
+        #endregion
     }
 }

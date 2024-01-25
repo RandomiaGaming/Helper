@@ -6,20 +6,19 @@ using System.IO;
 using System.Diagnostics;
 using Microsoft.Win32;
 
-namespace Helper.Core.Simple
+namespace SharpShell
 {
-    public static class SimpleCommandProcessor
+    public class CommandProcessor
     {
         private static List<Function> loadedFunctions = new List<Function>();
-        [STAThread]
-        public static void Main()
+        public  void Main()
         {
             try
             {
                 LoadFunctionsFromAssembly(Assembly.GetCallingAssembly());
 
                 string argumentFunction = GetArgumentFunction();
-                if (!(argumentFunction is null) && argumentFunction != "")
+                if (!(argumentFunction is null) && argumentFunction != string.Empty)
                 {
                     try
                     {
@@ -60,10 +59,10 @@ namespace Helper.Core.Simple
                 }
                 else
                 {
-                    return "";
+                    return string.Empty;
                 }
 
-                string output = "";
+                string output = string.Empty;
 
                 foreach (string arg in args)
                 {
@@ -77,7 +76,7 @@ namespace Helper.Core.Simple
                     }
                 }
 
-                if (output is null | output == "")
+                if (output is null | output == string.Empty)
                 {
                     return null;
                 }
@@ -148,16 +147,16 @@ namespace Helper.Core.Simple
             {
                 for (int i = 0; i < loadedFunctions.Count; i++)
                 {
-                    if (loadedFunctions[i].name.ToUpper() == function.name.ToUpper())
+                    if (loadedFunctions[i].Name.ToUpper() == function.Name.ToUpper())
                     {
-                        throw new Exception($"A function with the name \"{function.name}\" already exists.");
+                        throw new Exception($"A function with the name \"{function.Name}\" already exists.");
                     }
                 }
                 loadedFunctions.Add(function);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Could not load function \"{function.name}\" due to exception \"{GetExceptionMessage(ex)}\".");
+                throw new Exception($"Could not load function \"{function.Name}\" due to exception \"{GetExceptionMessage(ex)}\".");
             }
         }
 
@@ -171,7 +170,7 @@ namespace Helper.Core.Simple
             {
                 for (int i = 0; i < loadedFunctions.Count; i++)
                 {
-                    if (loadedFunctions[i].sourceAssembly == assembly)
+                    if (loadedFunctions[i].SourceAssembly == assembly)
                     {
                         UnloadFunction(loadedFunctions[i]);
                         i--;
@@ -193,7 +192,7 @@ namespace Helper.Core.Simple
             {
                 for (int i = 0; i < loadedFunctions.Count; i++)
                 {
-                    if (loadedFunctions[i].name == method.Name)
+                    if (loadedFunctions[i].Name == method.Name)
                     {
                         UnloadFunction(loadedFunctions[i]);
                         i--;
@@ -215,7 +214,7 @@ namespace Helper.Core.Simple
             {
                 for (int i = 0; i < loadedFunctions.Count; i++)
                 {
-                    if (loadedFunctions[i].name == function.name)
+                    if (loadedFunctions[i].Name == function.Name)
                     {
                         loadedFunctions.RemoveAt(i);
                         i--;
@@ -224,7 +223,7 @@ namespace Helper.Core.Simple
             }
             catch (Exception ex)
             {
-                throw new Exception($"Could not unload function \"{function.name}\" due to exception \"{GetExceptionMessage(ex)}\".");
+                throw new Exception($"Could not unload function \"{function.Name}\" due to exception \"{GetExceptionMessage(ex)}\".");
             }
         }
 
@@ -233,9 +232,9 @@ namespace Helper.Core.Simple
             return new List<Function>(loadedFunctions);
         }
 
-        public static void RunCommand(string command)
+        public void RunCommand(string command)
         {
-            if (command is null || command == "")
+            if (command is null || command == string.Empty)
             {
                 throw new Exception("Could not run command because command was null.");
             }
@@ -264,7 +263,7 @@ namespace Helper.Core.Simple
                 bool foundMatch = false;
                 for (int i = 0; i < loadedFunctions.Count; i++)
                 {
-                    if (loadedFunctions[i].name.ToUpper() == commandName)
+                    if (loadedFunctions[i].Name.ToUpper() == commandName)
                     {
                         loadedFunctions[i].Invoke(arguments);
                         foundMatch = true;
@@ -282,7 +281,7 @@ namespace Helper.Core.Simple
         }
         public static List<string> SplitCommand(string source)
         {
-            if (source is null || source == "")
+            if (source is null || source == string.Empty)
             {
                 return new List<string>();
             }
@@ -291,33 +290,33 @@ namespace Helper.Core.Simple
             {
                 List<string> output = new List<string>();
 
-                string currentStatement = "";
+                string currentStatement = string.Empty;
                 bool inQuotes = false;
                 for (int i = 0; i < source.Length; i++)
                 {
                     if (source[i] == '"')
                     {
-                        if (currentStatement != "")
+                        if (currentStatement != string.Empty)
                         {
                             output.Add(currentStatement);
                         }
-                        currentStatement = "";
+                        currentStatement = string.Empty;
                         inQuotes = !inQuotes;
                     }
                     else if (source[i] == ' ' && !inQuotes)
                     {
-                        if (currentStatement != "")
+                        if (currentStatement != string.Empty)
                         {
                             output.Add(currentStatement);
                         }
-                        currentStatement = "";
+                        currentStatement = string.Empty;
                     }
                     else
                     {
                         currentStatement += source[i];
                     }
                 }
-                if (currentStatement != "")
+                if (currentStatement != string.Empty)
                 {
                     output.Add(currentStatement);
                 }
@@ -406,9 +405,9 @@ namespace Helper.Core.Simple
             try
             {
                 string output = ex.Message;
-                output = output.Replace("\n", "");
-                output = output.Replace("\r", "");
-                output = output.Replace("\t", "");
+                output = output.Replace("\n", string.Empty);
+                output = output.Replace("\r", string.Empty);
+                output = output.Replace("\t", string.Empty);
                 return output;
             }
             catch

@@ -1,51 +1,60 @@
 ﻿using System;
 using System.Reflection;
 using System.Collections.Generic;
-namespace Helper.Core
+namespace SharpShell
 {
     public sealed class Function
     {
-        public readonly Assembly sourceAssembly = null;
-        public readonly Type sourceType = null;
-        public readonly ParameterInfo[] parameters = null;
-        public readonly MethodInfo sourceMethod = null;
-        public readonly RegisterFunctionAttribute registerFunctionAttribute = null;
-        public string name
+        #region Public Variables
+        public readonly RegisterFunctionAttribute RegisterFunctionAttribute = null;
+        public readonly MethodInfo SourceMethod = null;
+        #endregion
+        #region Public Properties
+        public string Description
         {
             get
             {
-                if (registerFunctionAttribute.methodNameIsName)
+                return RegisterFunctionAttribute.Description;
+            }
+        }
+        public string Name
+        {
+            get
+            {
+                if (RegisterFunctionAttribute.Name is null)
                 {
-                    return sourceMethod.Name;
+                    return SourceMethod.Name;
                 }
-                else
+                return RegisterFunctionAttribute.Name;
+            }
+        }
+        public string[] Aliases
+        {
+            get
+            {
+                if (RegisterFunctionAttribute._aliases is null || RegisterFunctionAttribute._aliases.Length == 0)
                 {
-                    return registerFunctionAttribute.customName;
+                    return new string[0];
                 }
+                return (string[])RegisterFunctionAttribute._aliases.Clone();
             }
         }
-        public string description
+        public bool asdf
         {
             get
             {
-                return registerFunctionAttribute.description;
+                SourceMethod.
             }
         }
-        public string[] aliases
-        {
-            get
-            {
-                return registerFunctionAttribute.aliases;
-            }
-        }
+        #endregion
         public Function(MethodInfo sourceMethod)
         {
             if (sourceMethod is null)
             {
                 throw new NullReferenceException($"Could not create function from method because method was null.");
             }
-            registerFunctionAttribute = sourceMethod.GetCustomAttribute<RegisterFunctionAttribute>();
-            if (registerFunctionAttribute is null)
+            RegisterFunctionAttribute = sourceMethod.GetCustomAttribute<RegisterFunctionAttribute>();
+            if (RegisterFunctionAttribute is null)
             {
                 throw new NullReferenceException($"Could not create function from method \"{sourceMethod.Name}\" beacuse it does not have the RegisterFunction attribute.");
             }
@@ -61,9 +70,9 @@ namespace Helper.Core
             {
                 throw new ArgumentException($"Could not create function from method \"{sourceMethod.Name}\" because method contains generic types.");
             }
-            this.sourceMethod = sourceMethod;
-            parameters = sourceMethod.GetParameters();
-            foreach (ParameterInfo parameter in parameters)
+            this.SourceMethod = sourceMethod;
+            Parameters = sourceMethod.GetParameters();
+            foreach (ParameterInfo parameter in Parameters)
             {
                 if (parameter.IsOut)
                 {
@@ -86,16 +95,8 @@ namespace Helper.Core
                     throw new Exception($"Could not create function from method \"{sourceMethod.Name}\" because parameter \"{parameter.Name}\" was marked as retval.");
                 }
             }
-            sourceType = sourceMethod.DeclaringType;
-            if (sourceType is null)
-            {
-                throw new NullReferenceException($"Could not create function from method \"{sourceMethod.Name}\" beacuse its source type was null.");
-            }
-            sourceAssembly = sourceMethod.DeclaringType.Assembly;
-            if (sourceAssembly is null)
-            {
-                throw new NullReferenceException($"Could not create function from method \"{sourceMethod.Name}\" beacuse its source assembly was null.");
-            }
+            SourceType = sourceMethod.DeclaringType;
+            SourceAssembly = sourceMethod.DeclaringType.Assembly;
         }
         public object Invoke(List<object> arguments)
         {
@@ -103,19 +104,19 @@ namespace Helper.Core
             {
                 arguments = new List<object>();
             }
-            if (arguments.Count < parameters.Length)
+            if (arguments.Count < Parameters.Length)
             {
-                throw new ArgumentException($"No argument was provided for property \"{parameters[arguments.Count].Name}\".");
+                throw new ArgumentException($"No argument was provided for property \"{Parameters[arguments.Count].Name}\".");
             }
-            else if (arguments.Count > parameters.Length)
+            else if (arguments.Count > Parameters.Length)
             {
                 throw new ArgumentException("Too many arguments were provided.");
             }
-            return sourceMethod.Invoke(null, arguments.ToArray());
+            return SourceMethod.Invoke(null, arguments.ToArray());
         }
         public override string ToString()
         {
-            return $"Helper.Function(\"{name}\", \"{description}\")";
+            return $"Helper.Function(\"{Name}\", \"{Description}\")";
         }
     }
 }

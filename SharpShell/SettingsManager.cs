@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System;
 
-namespace Helper
+namespace SharpShell
 {
     public static class SettingsManager
     {
@@ -11,7 +11,7 @@ namespace Helper
         {
             get
             {
-                return Assembly.GetExecutingAssembly().Location;
+                return typeof(SettingsManager).Assembly.Location;
             }
         }
         public static string installRoot
@@ -44,13 +44,13 @@ namespace Helper
                 }
                 if (!File.Exists(exceptionLogLocation))
                 {
-                    File.WriteAllText(exceptionLogLocation, "");
+                    File.WriteAllText(exceptionLogLocation, string.Empty);
                 }
                 return exceptionLogLocation;
             }
             set
             {
-                if (value is null || value == "")
+                if (value is null || value == string.Empty)
                 {
                     throw new NullReferenceException("Exception log location cannot be null or empty.");
                 }
